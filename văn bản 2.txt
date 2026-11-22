@@ -1,0 +1,1266 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>HMONG DI NGUY // CYBERNETIC INTERFACE</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400;500;700&family=Orbitron:wght@500;700;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --neon-green: #00ff41;
+            --neon-emerald: #0aff60;
+            --mist-green: rgba(0, 255, 65, 0.14);
+            --dark-bg: #020904;
+        }
+
+        * {
+            box-sizing: border-box;
+            user-select: none;
+            -webkit-user-select: none;
+        }
+
+        body, html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            background-color: var(--dark-bg);
+            font-family: 'Fira Code', monospace;
+            color: var(--neon-green);
+            touch-action: manipulation;
+        }
+
+        /* Hiệu ứng sương mù xanh mờ ảo (Misty Green Glow) */
+        .mist-layer {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 1;
+            background: 
+                radial-gradient(circle at 50% 45%, rgba(0, 255, 65, 0.18) 0%, rgba(4, 38, 16, 0.28) 45%, rgba(1, 8, 3, 0.94) 100%),
+                radial-gradient(circle at 18% 80%, rgba(10, 255, 96, 0.14) 0%, transparent 45%),
+                radial-gradient(circle at 82% 20%, rgba(0, 220, 80, 0.14) 0%, transparent 45%);
+            animation: mistPulse 9s ease-in-out infinite alternate;
+        }
+
+        @keyframes mistPulse {
+            0% { opacity: 0.85; transform: scale(1); }
+            100% { opacity: 1; transform: scale(1.04); }
+        }
+
+        /* Lớp sương mù trôi nhẹ */
+        .fog-drift {
+            position: fixed;
+            inset: -20%;
+            pointer-events: none;
+            z-index: 2;
+            background-image: 
+                radial-gradient(ellipse at 30% 40%, rgba(0, 255, 85, 0.09) 0%, transparent 55%),
+                radial-gradient(ellipse at 70% 60%, rgba(0, 200, 70, 0.08) 0%, transparent 55%);
+            filter: blur(28px);
+            animation: driftFog 18s linear infinite alternate;
+        }
+
+        @keyframes driftFog {
+            0% { transform: translate(-3%, -2%) rotate(0deg); }
+            100% { transform: translate(3%, 2%) rotate(2deg); }
+        }
+
+        /* Đường quét màn hình CRT mờ */
+        .scanlines {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 30;
+            background: linear-gradient(
+                to bottom,
+                rgba(255, 255, 255, 0),
+                rgba(255, 255, 255, 0) 50%,
+                rgba(0, 255, 65, 0.035) 50%,
+                rgba(0, 255, 65, 0.035)
+            );
+            background-size: 100% 4px;
+        }
+
+        /* Glassmorphism mờ màng màu xanh */
+        .cyber-glass {
+            background: rgba(3, 22, 10, 0.45);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border: 1px solid rgba(0, 255, 65, 0.28);
+            box-shadow: 0 0 24px rgba(0, 255, 65, 0.14), inset 0 0 15px rgba(0, 255, 65, 0.07);
+        }
+
+        /* Hiệu ứng chữ Glitch cho tiêu đề HMONG DI NGUY */
+        .cyber-title {
+            font-family: 'Orbitron', sans-serif;
+            letter-spacing: 0.18em;
+            text-shadow: 
+                0 0 10px rgba(0, 255, 65, 0.85),
+                0 0 25px rgba(0, 255, 65, 0.55),
+                0 0 45px rgba(0, 255, 65, 0.35);
+            position: relative;
+        }
+
+        .cyber-title::before,
+        .cyber-title::after {
+            content: attr(data-text);
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0.75;
+        }
+
+        .cyber-title::before {
+            color: #80ffaa;
+            z-index: -1;
+            animation: glitch-1 3.5s infinite linear alternate-reverse;
+        }
+
+        .cyber-title::after {
+            color: #00aa33;
+            z-index: -2;
+            animation: glitch-2 2.8s infinite linear alternate-reverse;
+        }
+
+        @keyframes glitch-1 {
+            0%, 92%, 100% { transform: translate(0); }
+            94% { transform: translate(-2px, 1px); }
+            96% { transform: translate(2px, -1px); }
+            98% { transform: translate(-1px, -1px); }
+        }
+
+        @keyframes glitch-2 {
+            0%, 90%, 100% { transform: translate(0); }
+            92% { transform: translate(2px, 1px); }
+            95% { transform: translate(-2px, -1px); }
+            97% { transform: translate(1px, 2px); }
+        }
+
+        /* Hiệu ứng nút Zalo Hacker Neon nổi bật & nhịp thở phát sáng */
+        @keyframes zaloGlowPulse {
+            0%, 100% {
+                box-shadow: 0 0 14px rgba(0, 132, 255, 0.65), 0 0 26px rgba(0, 255, 65, 0.45), inset 0 0 10px rgba(0, 229, 255, 0.3);
+                border-color: #00e5ff;
+            }
+            50% {
+                box-shadow: 0 0 24px rgba(0, 255, 65, 0.9), 0 0 42px rgba(0, 132, 255, 0.75), inset 0 0 16px rgba(0, 255, 65, 0.45);
+                border-color: #00ff41;
+            }
+        }
+
+        .zalo-cyber-btn {
+            background: linear-gradient(135deg, rgba(0, 104, 255, 0.78) 0%, rgba(2, 44, 22, 0.9) 55%, rgba(0, 255, 65, 0.42) 100%);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1.5px solid #00e5ff;
+            animation: zaloGlowPulse 2.4s ease-in-out infinite;
+            transition: transform 0.2s ease, background 0.2s ease;
+        }
+
+        .zalo-cyber-btn:hover {
+            transform: scale(1.04);
+            background: linear-gradient(135deg, rgba(0, 120, 255, 0.95) 0%, rgba(4, 65, 32, 0.95) 55%, rgba(0, 255, 65, 0.6) 100%);
+        }
+
+        .zalo-cyber-btn:active {
+            transform: scale(0.96);
+        }
+    </style>
+</head>
+<body class="relative w-full h-full overflow-hidden">
+
+    <!-- Lớp nền sương mù xanh -->
+    <div class="mist-layer"></div>
+    <div class="fog-drift"></div>
+    <div class="scanlines"></div>
+
+    <!-- Canvas 1: Mưa mã Matrix & Lưới tọa độ nền -->
+    <canvas id="bgCodeCanvas" class="fixed inset-0 w-full h-full z-0 opacity-45 pointer-events-none"></canvas>
+
+    <!-- Canvas 2: Hệ thống Trái Đất & Vệ Tinh Quỹ Đạo 3D -->
+    <canvas id="satelliteCanvas" class="fixed inset-0 w-full h-full z-10 pointer-events-none"></canvas>
+
+    <!-- Canvas 3: Con Nhện Thực Tế Tương Tác (Nằm dưới các nút bấm nhưng bắt trọn chạm màn hình) -->
+    <canvas id="spiderCanvas" class="fixed inset-0 w-full h-full z-20 cursor-crosshair"></canvas>
+
+    <!-- Giao diện HUD nổi (Glassmorphism mờ) -->
+    <div class="fixed inset-0 z-30 pointer-events-none flex flex-col justify-between p-2.5 sm:p-5">
+        
+        <!-- HEADER: Tên hệ thống HMONG DI NGUY & Nút Liên Hệ Zalo nổi bật ngay phía dưới -->
+        <header class="flex flex-col items-center w-full gap-2">
+            <div class="w-full flex flex-col md:flex-row items-center justify-between gap-2">
+                <!-- Khối trạng thái bên trái -->
+                <div class="cyber-glass rounded-xl px-3.5 py-1.5 flex items-center gap-3 text-[10px] sm:text-xs w-full md:w-auto justify-between md:justify-start">
+                    <div class="flex items-center gap-2">
+                        <span class="relative flex h-2.5 w-2.5">
+                            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                            <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-[#00ff41]"></span>
+                        </span>
+                        <span class="font-bold tracking-wider text-emerald-300">SAT-LINK: ACTIVE</span>
+                    </div>
+                    <span class="text-emerald-500/60">|</span>
+                    <span id="clockDisplay" class="text-emerald-200/90 font-mono">00:00:00 UTC</span>
+                </div>
+
+                <!-- TIÊU ĐỀ CHÍNH: HMONG DI NGUY -->
+                <div class="cyber-glass rounded-2xl px-5 py-2 sm:px-9 sm:py-2.5 text-center border-emerald-400/40 relative overflow-hidden">
+                    <div class="text-[8px] sm:text-[10px] tracking-[0.3em] text-emerald-300/75 uppercase mb-0.5">
+                        // QUANTUM ORBITAL & ARACHNID OS v9.4 //
+                    </div>
+                    <h1 class="cyber-title text-lg sm:text-3xl md:text-4xl font-black text-[#00ff41]" data-text="HMONG DI NGUY">
+                        HMONG DI NGUY
+                    </h1>
+                    <div class="mt-0.5 flex items-center justify-center gap-2 text-[9px] sm:text-[10px] text-emerald-300/80">
+                        <span class="inline-block w-6 sm:w-8 h-[1px] bg-emerald-400/50"></span>
+                        <span>CHẠM VÀO MÀN HÌNH ĐỂ ĐIỀU HƯỚNG NHỆN</span>
+                        <span class="inline-block w-6 sm:w-8 h-[1px] bg-emerald-400/50"></span>
+                    </div>
+                </div>
+
+                <!-- Khối tọa độ mục tiêu bên phải -->
+                <div class="cyber-glass rounded-xl px-3.5 py-1.5 flex items-center gap-3 text-[10px] sm:text-xs w-full md:w-auto justify-between md:justify-end">
+                    <div class="text-emerald-300/80">
+                        TARGET: <span id="targetCoords" class="text-[#00ff41] font-bold">AUTO-PATROL</span>
+                    </div>
+                    <span class="text-emerald-500/60">|</span>
+                    <div class="text-emerald-300/80">
+                        SAT-COUNT: <span class="text-[#00ff41] font-bold">04</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- NÚT LIÊN HỆ ZALO CỐ ĐỊNH NGAY DƯỚI TIÊU ĐỀ (z-index: 99999, luôn hiển thị rõ trên mọi màn hình) -->
+            <div style="z-index: 99999;" class="pointer-events-auto relative mt-0.5">
+                <a id="zaloContactBtn"
+                   href="https://zalo.me/0378257342"
+                   target="_blank"
+                   rel="noopener noreferrer"
+                   aria-label="Liên hệ Zalo 0378257342"
+                   class="zalo-cyber-btn rounded-full px-5 py-2 sm:px-7 sm:py-2.5 flex items-center justify-center gap-2.5 text-xs sm:text-sm font-extrabold tracking-wider text-white cursor-pointer shadow-2xl">
+                    <!-- Icon Zalo SVG -->
+                    <span class="flex items-center justify-center w-6 h-6 sm:w-7 sm:h-7 rounded-full bg-[#0068ff] text-white border border-cyan-300 shadow-[0_0_12px_#0084ff]">
+                        <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24" aria-hidden="true">
+                            <path d="M12.49 10.272v-.45h1.347v6.322h-.77a.576.576 0 0 1-.577-.573v.001a3.27 3.27 0 0 1-1.938.632a3.284 3.284 0 0 1-3.284-3.282a3.284 3.284 0 0 1 3.284-3.282a3.27 3.27 0 0 1 1.937.632zM6.919 7.79v.205c0 .382-.051.694-.3 1.06l-.03.034a7.714 7.714 0 0 0-.242.285L2.024 14.8h4.895v.768a.576.576 0 0 1-.577.576H0v-.362c0-.443.11-.641.25-.847L4.858 9.23H.192V7.79zm8.551 8.354a.48.48 0 0 1-.48-.48V7.79h1.441v8.354zM20.693 9.6a3.306 3.306 0 1 1 .002 6.612a3.306 3.306 0 0 1-.002-6.612zm-10.14 5.253a1.932 1.932 0 1 0 0-3.863a1.932 1.932 0 0 0 0 3.863zm10.14-.003a1.945 1.945 0 1 0 0-3.89a1.945 1.945 0 0 0 0 3.89z"/>
+                        </svg>
+                    </span>
+                    <span class="text-cyan-200 drop-shadow-[0_0_6px_rgba(0,229,255,0.8)]">LIÊN HỆ ZALO:</span>
+                    <span class="text-[#00ff41] font-mono text-sm sm:text-base tracking-widest drop-shadow-[0_0_8px_rgba(0,255,65,0.9)]">0378257342</span>
+                    <span class="inline-flex h-2.5 w-2.5 rounded-full bg-[#00ff41] animate-ping"></span>
+                </a>
+            </div>
+        </header>
+
+        <!-- KHU VỰC GIỮA: Các bảng code chạy liên tục ở 2 bên -->
+        <div class="flex-1 flex items-center justify-between my-2 overflow-hidden">
+            
+            <!-- Cột trái: Luồng mã xâm nhập & Hex Dump chạy không ngừng -->
+            <aside class="hidden lg:flex flex-col w-72 h-[60vh] cyber-glass rounded-2xl p-3.5 overflow-hidden">
+                <div class="flex items-center justify-between border-b border-emerald-500/30 pb-2 mb-2 text-[11px]">
+                    <span class="font-bold tracking-widest text-emerald-300">>_ LIVE_DECRYPT_STREAM</span>
+                    <span class="px-1.5 py-0.5 rounded bg-emerald-500/20 text-[9px] text-emerald-200 animate-pulse">RUNNING</span>
+                </div>
+                <div id="leftCodeStream" class="flex-1 overflow-hidden text-[10.5px] leading-relaxed font-mono text-emerald-300/85 space-y-1">
+                    <!-- Mã code sẽ được bơm liên tục bằng JS -->
+                </div>
+                <div class="mt-2 pt-2 border-t border-emerald-500/25 text-[10px] flex justify-between text-emerald-400/80">
+                    <span>PKT/S: <b id="pktRate">48,920</b></span>
+                    <span>ENC: <b>AES-512-Q</b></span>
+                </div>
+            </aside>
+
+            <!-- Cột phải: Dữ liệu vệ tinh & Nhật ký điều khiển nhện -->
+            <aside class="hidden lg:flex flex-col w-72 h-[60vh] cyber-glass rounded-2xl p-3.5 overflow-hidden">
+                <div class="flex items-center justify-between border-b border-emerald-500/30 pb-2 mb-2 text-[11px]">
+                    <span class="font-bold tracking-widest text-emerald-300">>_ ORBITAL_TELEMETRY</span>
+                    <span class="text-[10px] text-emerald-400">21.0285° N</span>
+                </div>
+                
+                <!-- Thông số vệ tinh trực tiếp -->
+                <div class="space-y-2 mb-3 text-[10.5px]">
+                    <div class="p-2 rounded-lg bg-emerald-950/40 border border-emerald-500/20">
+                        <div class="flex justify-between text-emerald-300 font-semibold">
+                            <span>SAT-ALPHA [LEO]</span>
+                            <span class="text-[#00ff41]">99.8% SIG</span>
+                        </div>
+                        <div class="w-full bg-emerald-950 h-1.5 rounded-full mt-1 overflow-hidden">
+                            <div class="bg-[#00ff41] h-full w-[94%] rounded-full"></div>
+                        </div>
+                    </div>
+                    <div class="p-2 rounded-lg bg-emerald-950/40 border border-emerald-500/20">
+                        <div class="flex justify-between text-emerald-300 font-semibold">
+                            <span>SAT-BETA [GEO-X]</span>
+                            <span class="text-[#00ff41]">97.4% SIG</span>
+                        </div>
+                        <div class="w-full bg-emerald-950 h-1.5 rounded-full mt-1 overflow-hidden">
+                            <div class="bg-emerald-400 h-full w-[88%] rounded-full"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Nhật ký chạy liên tục -->
+                <div id="rightCodeStream" class="flex-1 overflow-hidden text-[10px] leading-relaxed font-mono text-emerald-200/80 space-y-1">
+                    <!-- Log chạy liên tục -->
+                </div>
+            </aside>
+        </div>
+
+        <!-- FOOTER: Dải băng chạy mã code liên tục & Trạng thái nhện -->
+        <footer class="flex flex-col sm:flex-row items-center justify-between gap-2">
+            <div class="cyber-glass rounded-xl px-3.5 py-1.5 text-[10px] sm:text-xs flex items-center gap-2.5 w-full sm:w-auto justify-center sm:justify-start">
+                <span class="text-emerald-400 font-bold">ARACHNID-AI:</span>
+                <span id="spiderStatus" class="text-emerald-200">ĐANG TUẦN TRA TỰ DO...</span>
+            </div>
+
+            <!-- Dải mã code chạy ngang liên tục trên mọi thiết bị -->
+            <div class="cyber-glass rounded-xl px-4 py-1.5 flex-1 max-w-2xl w-full overflow-hidden">
+                <div id="bottomTicker" class="whitespace-nowrap text-[10px] sm:text-[11px] text-emerald-300/90 font-mono">
+                    0x7F8A9C [HMONG_DI_NGUY] :: UPLINK ESTABLISHED :: SAT_ORBIT_SYNC=OK :: INVERSE_KINEMATICS_ENGINE=ACTIVE :: ZALO_HOTLINE: 0378257342 ::
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        /**
+         * ============================================================================
+         * HỆ THỐNG GIAO DIỆN HACKER "HMONG DI NGUY"
+         * ============================================================================
+         */
+
+        const bgCanvas = document.getElementById('bgCodeCanvas');
+        const bgCtx = bgCanvas.getContext('2d');
+
+        const satCanvas = document.getElementById('satelliteCanvas');
+        const satCtx = satCanvas.getContext('2d');
+
+        const spiderCanvas = document.getElementById('spiderCanvas');
+        const spiderCtx = spiderCanvas.getContext('2d');
+
+        let width = window.innerWidth;
+        let height = window.innerHeight;
+        let dpr = Math.min(window.devicePixelRatio || 1, 2);
+
+        function resizeAllCanvases() {
+            width = window.innerWidth;
+            height = window.innerHeight;
+            dpr = Math.min(window.devicePixelRatio || 1, 2);
+
+            [bgCanvas, satCanvas, spiderCanvas].forEach(canvas => {
+                canvas.width = width * dpr;
+                canvas.height = height * dpr;
+                canvas.style.width = width + 'px';
+                canvas.style.height = height + 'px';
+                const ctx = canvas.getContext('2d');
+                ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+            });
+
+            initMatrixColumns();
+        }
+
+        window.addEventListener('resize', resizeAllCanvases);
+
+        // ============================================================================
+        // PHẦN 1: MƯA MÃ MATRIX MỜ ẢO NỀN XANH
+        // ============================================================================
+        const matrixChars = "01アイウエオカキクケコサシスセソタチツテトHMONGDINGUY#$%&*+<>";
+        let columns = [];
+        const fontSize = 14;
+
+        function initMatrixColumns() {
+            const colCount = Math.floor(width / fontSize);
+            columns = [];
+            for (let i = 0; i < colCount; i++) {
+                columns[i] = Math.random() * -50;
+            }
+        }
+
+        function drawMatrixRain() {
+            bgCtx.fillStyle = 'rgba(2, 10, 4, 0.08)';
+            bgCtx.fillRect(0, 0, width, height);
+
+            bgCtx.font = `${fontSize}px "Fira Code", monospace`;
+
+            for (let i = 0; i < columns.length; i++) {
+                const text = matrixChars.charAt(Math.floor(Math.random() * matrixChars.length));
+                const x = i * fontSize;
+                const y = columns[i] * fontSize;
+
+                if (Math.random() > 0.96) {
+                    bgCtx.fillStyle = '#a8ffbe';
+                } else {
+                    bgCtx.fillStyle = 'rgba(0, 255, 65, 0.42)';
+                }
+
+                bgCtx.fillText(text, x, y);
+
+                if (y > height && Math.random() > 0.975) {
+                    columns[i] = 0;
+                }
+                columns[i] += 0.65;
+            }
+        }
+
+        // ============================================================================
+        // PHẦN 2: MÃ CODE CHẠY LIÊN TỤC KHÔNG HẾT (TERMINAL & TICKER)
+        // ============================================================================
+        const leftStreamEl = document.getElementById('leftCodeStream');
+        const rightStreamEl = document.getElementById('rightCodeStream');
+        const bottomTickerEl = document.getElementById('bottomTicker');
+        const pktRateEl = document.getElementById('pktRate');
+        const clockEl = document.getElementById('clockDisplay');
+
+        const codeSnippets = [
+            "inject_payload(0x004F8A, 'HMONG_DI_NGUY');",
+            "while(true) { bypass_firewall(NODE_7); }",
+            "ssh -i /root/.ssh/quantum_key root@10.24.99.1",
+            "DECRYPTING_STREAM: [██████████░░] 84.2%",
+            "0x88F1: 48 4D 4F 4E 47 20 44 49 20 4E 47 55 59",
+            "SAT_UPLINK -> FREQ: 14.25 GHz | SNR: +28.4dB",
+            "TRACE_ROUTE: 192.168.1.1 -> 172.16.0.9 -> ORBIT",
+            "KERNEL_HOOK: arachnid_ik_solver() -> OK",
+            "SCANNING_PORTS: 22, 80, 443, 8080, 31337 [OPEN]",
+            "MEMORY_DUMP: 0x7ffeefbff5c0 -> 0x00ff41aa",
+            "OVERRIDE_AUTH_TOKEN: GRANTED [LEVEL_OMEGA]",
+            "ZALO_UPLINK_READY: 0378257342 [ENCRYPTED]",
+            "CRYPTO_HASH: sha256:9f86d081884c7d659a2feaa0",
+            "ORBITAL_VECTOR: vx=7.66km/s vy=-1.12km/s vz=0.44",
+            "PACKET_SNIFFER: captured 1024 bytes from eth0"
+        ];
+
+        function appendContinuousCode() {
+            if (leftStreamEl) {
+                const line = document.createElement('div');
+                const hexAddr = '0x' + Math.floor(Math.random() * 0xFFFFFF).toString(16).padStart(6, '0').toUpperCase();
+                const snippet = codeSnippets[Math.floor(Math.random() * codeSnippets.length)];
+                line.innerHTML = `<span class="text-emerald-500/70">${hexAddr}</span> <span class="text-emerald-200">${snippet}</span>`;
+                leftStreamEl.appendChild(line);
+                if (leftStreamEl.children.length > 22) {
+                    leftStreamEl.removeChild(leftStreamEl.firstChild);
+                }
+            }
+
+            if (rightStreamEl) {
+                const log = document.createElement('div');
+                const now = new Date();
+                const ms = String(now.getMilliseconds()).padStart(3, '0');
+                const actions = [
+                    `[OK] SAT_BEACON_SYNC_${ms}`,
+                    `[TX] SEND_TELEMETRY -> HMONG_CORE`,
+                    `[AI] LEG_GAIT_MATRIX_RECALC`,
+                    `[SEC] CLOAK_FIELD_STABLE (99.9%)`,
+                    `[NET] ZALO_GATEWAY_0378257342_ONLINE`
+                ];
+                log.textContent = actions[Math.floor(Math.random() * actions.length)];
+                rightStreamEl.appendChild(log);
+                if (rightStreamEl.children.length > 14) {
+                    rightStreamEl.removeChild(rightStreamEl.firstChild);
+                }
+            }
+
+            if (pktRateEl && Math.random() > 0.5) {
+                pktRateEl.textContent = (45000 + Math.floor(Math.random() * 9500)).toLocaleString();
+            }
+        }
+
+        setInterval(appendContinuousCode, 130);
+
+        let tickerText = "0x7F8A9C [HMONG_DI_NGUY] :: SATELLITE ORBITAL LOCKED :: CONTINUOUS DATA STREAM ACTIVE :: LIÊN HỆ ZALO: 0378257342 :: TAP ANYWHERE TO COMMAND ARACHNID UNIT :: ";
+        setInterval(() => {
+            tickerText = tickerText.slice(1) + tickerText[0];
+            if (bottomTickerEl) bottomTickerEl.textContent = tickerText;
+        }, 55);
+
+        setInterval(() => {
+            const now = new Date();
+            if (clockEl) {
+                clockEl.textContent = now.toISOString().split('T')[1].split('.')[0] + ' UTC';
+            }
+        }, 1000);
+
+        // ============================================================================
+        // PHẦN 3: HIỆU ỨNG VỆ TINH DI CHUYỂN QUANH QUẢ ĐỊA CẦU 3D
+        // ============================================================================
+        let globeRotation = 0;
+
+        const satellites = [
+            {
+                name: "SAT-HMONG-01",
+                radiusMult: 1.48,
+                speed: 0.011,
+                angle: 0.4,
+                tiltX: 0.42,
+                tiltZ: -0.28,
+                trail: []
+            },
+            {
+                name: "SAT-NGUY-02",
+                radiusMult: 1.72,
+                speed: -0.0085,
+                angle: 2.5,
+                tiltX: -0.52,
+                tiltZ: 0.35,
+                trail: []
+            },
+            {
+                name: "ORBIT-EYE-03",
+                radiusMult: 1.32,
+                speed: 0.015,
+                angle: 4.1,
+                tiltX: 0.18,
+                tiltZ: 0.62,
+                trail: []
+            },
+            {
+                name: "RELAY-X4",
+                radiusMult: 1.92,
+                speed: 0.0065,
+                angle: 1.2,
+                tiltX: -0.25,
+                tiltZ: -0.55,
+                trail: []
+            }
+        ];
+
+        function projectOrbitPoint(angle, radius, tiltX, tiltZ, cx, cy) {
+            let x = Math.cos(angle) * radius;
+            let y = 0;
+            let z = Math.sin(angle) * radius;
+
+            let y1 = y * Math.cos(tiltX) - z * Math.sin(tiltX);
+            let z1 = y * Math.sin(tiltX) + z * Math.cos(tiltX);
+
+            let x2 = x * Math.cos(tiltZ) - y1 * Math.sin(tiltZ);
+            let y2 = x * Math.sin(tiltZ) + y1 * Math.cos(tiltZ);
+
+            const perspective = 650 / (650 + z1);
+            return {
+                x: cx + x2 * perspective,
+                y: cy + y2 * perspective,
+                z: z1,
+                scale: perspective
+            };
+        }
+
+        function drawDetailedSatellite(ctx, x, y, angle, scale, sat) {
+            ctx.save();
+            ctx.translate(x, y);
+            ctx.scale(scale, scale);
+
+            const glow = ctx.createRadialGradient(0, 0, 1, 0, 0, 22);
+            glow.addColorStop(0, 'rgba(0, 255, 65, 0.85)');
+            glow.addColorStop(0.4, 'rgba(0, 255, 65, 0.25)');
+            glow.addColorStop(1, 'rgba(0, 255, 65, 0)');
+            ctx.fillStyle = glow;
+            ctx.beginPath();
+            ctx.arc(0, 0, 22, 0, Math.PI * 2);
+            ctx.fill();
+
+            ctx.rotate(angle);
+
+            ctx.fillStyle = 'rgba(0, 255, 110, 0.35)';
+            ctx.strokeStyle = '#00ff41';
+            ctx.lineWidth = 1.2;
+
+            ctx.fillRect(-20, -4, 13, 8);
+            ctx.strokeRect(-20, -4, 13, 8);
+            ctx.beginPath();
+            ctx.moveTo(-13.5, -4); ctx.lineTo(-13.5, 4);
+            ctx.moveTo(-20, 0); ctx.lineTo(-7, 0);
+            ctx.stroke();
+
+            ctx.fillRect(7, -4, 13, 8);
+            ctx.strokeRect(7, -4, 13, 8);
+            ctx.beginPath();
+            ctx.moveTo(13.5, -4); ctx.lineTo(13.5, 4);
+            ctx.moveTo(7, 0); ctx.lineTo(20, 0);
+            ctx.stroke();
+
+            ctx.fillStyle = '#052b11';
+            ctx.strokeStyle = '#a8ffbe';
+            ctx.lineWidth = 1.4;
+            ctx.fillRect(-4.5, -5.5, 9, 11);
+            ctx.strokeRect(-4.5, -5.5, 9, 11);
+
+            ctx.beginPath();
+            ctx.arc(0, 7, 4, Math.PI, 0);
+            ctx.stroke();
+
+            ctx.restore();
+
+            ctx.save();
+            ctx.font = '600 9.5px "Fira Code", monospace';
+            ctx.fillStyle = 'rgba(168, 255, 190, 0.9)';
+            ctx.fillText(`${sat.name}`, x + 14 * scale, y - 8 * scale);
+            ctx.font = '9px "Fira Code", monospace';
+            ctx.fillStyle = 'rgba(0, 255, 65, 0.65)';
+            ctx.fillText(`[${Math.round(x)},${Math.round(y)}]`, x + 14 * scale, y + 3 * scale);
+            ctx.restore();
+        }
+
+        function drawSatelliteSystem(time) {
+            satCtx.clearRect(0, 0, width, height);
+
+            const cx = width * 0.5;
+            const cy = height * 0.54;
+            const baseRadius = Math.min(width, height) * 0.18;
+
+            satCtx.save();
+            satCtx.translate(cx, cy);
+            satCtx.strokeStyle = 'rgba(0, 255, 65, 0.14)';
+            satCtx.lineWidth = 1;
+            satCtx.setLineDash([4, 8]);
+            satCtx.beginPath();
+            satCtx.arc(0, 0, baseRadius * 2.05, 0, Math.PI * 2);
+            satCtx.stroke();
+            satCtx.setLineDash([]);
+
+            for (let i = 0; i < 36; i++) {
+                const a = (i * Math.PI) / 18 + globeRotation * 0.2;
+                const r1 = baseRadius * 2.02;
+                const r2 = baseRadius * (i % 3 === 0 ? 2.12 : 2.07);
+                satCtx.beginPath();
+                satCtx.moveTo(Math.cos(a) * r1, Math.sin(a) * r1);
+                satCtx.lineTo(Math.cos(a) * r2, Math.sin(a) * r2);
+                satCtx.strokeStyle = i % 3 === 0 ? 'rgba(0, 255, 65, 0.35)' : 'rgba(0, 255, 65, 0.15)';
+                satCtx.stroke();
+            }
+            satCtx.restore();
+
+            satellites.forEach(sat => {
+                sat.angle += sat.speed;
+                const orbitR = baseRadius * sat.radiusMult;
+
+                satCtx.beginPath();
+                for (let step = 0; step <= 64; step++) {
+                    const a = (step / 64) * Math.PI * 2;
+                    const pt = projectOrbitPoint(a, orbitR, sat.tiltX, sat.tiltZ, cx, cy);
+                    if (step === 0) satCtx.moveTo(pt.x, pt.y);
+                    else satCtx.lineTo(pt.x, pt.y);
+                }
+                satCtx.strokeStyle = 'rgba(0, 255, 65, 0.16)';
+                satCtx.lineWidth = 1;
+                satCtx.stroke();
+
+                const pos = projectOrbitPoint(sat.angle, orbitR, sat.tiltX, sat.tiltZ, cx, cy);
+                sat.currentPos = pos;
+
+                sat.trail.push({ x: pos.x, y: pos.y, z: pos.z });
+                if (sat.trail.length > 26) sat.trail.shift();
+
+                if (pos.z > 0) {
+                    drawSatelliteTrail(sat);
+                    drawDetailedSatellite(satCtx, pos.x, pos.y, sat.angle, pos.scale, sat);
+                }
+            });
+
+            globeRotation += 0.005;
+            satCtx.save();
+            satCtx.translate(cx, cy);
+
+            const earthGlow = satCtx.createRadialGradient(0, 0, baseRadius * 0.2, 0, 0, baseRadius * 1.25);
+            earthGlow.addColorStop(0, 'rgba(0, 255, 65, 0.22)');
+            earthGlow.addColorStop(0.7, 'rgba(0, 180, 50, 0.08)');
+            earthGlow.addColorStop(1, 'rgba(0, 255, 65, 0)');
+            satCtx.fillStyle = earthGlow;
+            satCtx.beginPath();
+            satCtx.arc(0, 0, baseRadius * 1.25, 0, Math.PI * 2);
+            satCtx.fill();
+
+            satCtx.strokeStyle = 'rgba(0, 255, 65, 0.45)';
+            satCtx.lineWidth = 1.5;
+            satCtx.beginPath();
+            satCtx.arc(0, 0, baseRadius, 0, Math.PI * 2);
+            satCtx.stroke();
+
+            const meridians = 8;
+            for (let i = 0; i < meridians; i++) {
+                const lon = (i / meridians) * Math.PI + globeRotation;
+                const rx = Math.abs(Math.cos(lon)) * baseRadius;
+                satCtx.beginPath();
+                satCtx.ellipse(0, 0, rx, baseRadius, 0, 0, Math.PI * 2);
+                satCtx.strokeStyle = 'rgba(0, 255, 65, 0.18)';
+                satCtx.lineWidth = 1;
+                satCtx.stroke();
+            }
+
+            const parallels = [-0.6, -0.3, 0, 0.3, 0.6];
+            parallels.forEach(lat => {
+                const y = lat * baseRadius;
+                const r = Math.sqrt(Math.max(0, baseRadius * baseRadius - y * y));
+                satCtx.beginPath();
+                satCtx.ellipse(0, y, r, r * 0.22, 0, 0, Math.PI * 2);
+                satCtx.strokeStyle = lat === 0 ? 'rgba(0, 255, 65, 0.42)' : 'rgba(0, 255, 65, 0.16)';
+                satCtx.stroke();
+            });
+
+            const beaconAngle = globeRotation * 1.5;
+            const bx = Math.cos(beaconAngle) * baseRadius * 0.55;
+            const by = -baseRadius * 0.22;
+            if (Math.sin(beaconAngle) > -0.2) {
+                const pulse = (Math.sin(time * 0.006) + 1) * 0.5;
+                satCtx.fillStyle = '#a8ffbe';
+                satCtx.beginPath();
+                satCtx.arc(bx, by, 3, 0, Math.PI * 2);
+                satCtx.fill();
+
+                satCtx.strokeStyle = `rgba(0, 255, 65, ${0.8 - pulse * 0.7})`;
+                satCtx.lineWidth = 1.5;
+                satCtx.beginPath();
+                satCtx.arc(bx, by, 4 + pulse * 14, 0, Math.PI * 2);
+                satCtx.stroke();
+            }
+
+            satCtx.restore();
+
+            satellites.forEach(sat => {
+                const pos = sat.currentPos;
+                if (pos && pos.z <= 0) {
+                    drawSatelliteTrail(sat);
+
+                    const beamGrad = satCtx.createLinearGradient(pos.x, pos.y, cx, cy);
+                    beamGrad.addColorStop(0, 'rgba(0, 255, 65, 0.45)');
+                    beamGrad.addColorStop(1, 'rgba(0, 255, 65, 0.02)');
+                    satCtx.strokeStyle = beamGrad;
+                    satCtx.lineWidth = 1;
+                    satCtx.setLineDash([3, 5]);
+                    satCtx.beginPath();
+                    satCtx.moveTo(pos.x, pos.y);
+                    satCtx.lineTo(cx, cy);
+                    satCtx.stroke();
+                    satCtx.setLineDash([]);
+
+                    drawDetailedSatellite(satCtx, pos.x, pos.y, sat.angle, pos.scale, sat);
+                }
+            });
+        }
+
+        function drawSatelliteTrail(sat) {
+            if (sat.trail.length < 2) return;
+            for (let i = 1; i < sat.trail.length; i++) {
+                const p0 = sat.trail[i - 1];
+                const p1 = sat.trail[i];
+                const alpha = (i / sat.trail.length) * 0.55;
+                satCtx.strokeStyle = `rgba(0, 255, 65, ${alpha})`;
+                satCtx.lineWidth = (i / sat.trail.length) * 2.2;
+                satCtx.beginPath();
+                satCtx.moveTo(p0.x, p0.y);
+                satCtx.lineTo(p1.x, p1.y);
+                satCtx.stroke();
+            }
+        }
+
+        // ============================================================================
+        // PHẦN 4: CON NHỆN CHÂN THỰC DI CHUYỂN THEO CÚ CHẠM / CLICK (INVERSE KINEMATICS)
+        // ============================================================================
+        const targetCoordsEl = document.getElementById('targetCoords');
+        const spiderStatusEl = document.getElementById('spiderStatus');
+        let clickRipples = [];
+
+        class RealisticSpider {
+            constructor(x, y) {
+                this.x = x;
+                this.y = y;
+                this.angle = -Math.PI / 4;
+                this.targetX = x;
+                this.targetY = y;
+                this.hasUserTarget = false;
+                this.idleTimer = 0;
+
+                this.scale = Math.min(width, height) < 600 ? 0.85 : 1.05;
+                this.speed = 0;
+                this.maxSpeed = 3.6;
+
+                this.legs = [];
+                const legConfigs = [
+                    { side: -1, baseAngle: -0.52, reach: 78, l1: 36, l2: 42, l3: 32, group: 0 },
+                    { side:  1, baseAngle:  0.52, reach: 78, l1: 36, l2: 42, l3: 32, group: 1 },
+                    { side: -1, baseAngle: -1.18, reach: 74, l1: 34, l2: 38, l3: 30, group: 1 },
+                    { side:  1, baseAngle:  1.18, reach: 74, l1: 34, l2: 38, l3: 30, group: 0 },
+                    { side: -1, baseAngle: -1.85, reach: 72, l1: 33, l2: 37, l3: 29, group: 0 },
+                    { side:  1, baseAngle:  1.85, reach: 72, l1: 33, l2: 37, l3: 29, group: 1 },
+                    { side: -1, baseAngle: -2.52, reach: 84, l1: 38, l2: 44, l3: 34, group: 1 },
+                    { side:  1, baseAngle:  2.52, reach: 84, l1: 38, l2: 44, l3: 34, group: 0 }
+                ];
+
+                legConfigs.forEach((cfg, idx) => {
+                    const ideal = this.getIdealFootPos(cfg);
+                    this.legs.push({
+                        ...cfg,
+                        index: idx,
+                        footX: ideal.x,
+                        footY: ideal.y,
+                        stepStartX: ideal.x,
+                        stepStartY: ideal.y,
+                        stepTargetX: ideal.x,
+                        stepTargetY: ideal.y,
+                        stepping: false,
+                        stepProgress: 0,
+                        liftHeight: 0
+                    });
+                });
+            }
+
+            setTarget(tx, ty) {
+                this.targetX = tx;
+                this.targetY = ty;
+                this.hasUserTarget = true;
+                if (targetCoordsEl) {
+                    targetCoordsEl.textContent = `X:${Math.round(tx)} Y:${Math.round(ty)}`;
+                }
+                if (spiderStatusEl) {
+                    spiderStatusEl.textContent = `ĐANG DI CHUYỂN TỚI [${Math.round(tx)}, ${Math.round(ty)}]`;
+                }
+            }
+
+            getIdealFootPos(cfg) {
+                const worldAngle = this.angle + cfg.baseAngle;
+                const dist = cfg.reach * this.scale;
+                return {
+                    x: this.x + Math.cos(worldAngle) * dist,
+                    y: this.y + Math.sin(worldAngle) * dist
+                };
+            }
+
+            update(time) {
+                const dx = this.targetX - this.x;
+                const dy = this.targetY - this.y;
+                const dist = Math.hypot(dx, dy);
+
+                if (!this.hasUserTarget && dist < 12) {
+                    this.idleTimer++;
+                    if (this.idleTimer > 180) {
+                        this.idleTimer = 0;
+                        const margin = 110;
+                        this.targetX = margin + Math.random() * (width - margin * 2);
+                        this.targetY = Math.max(150, margin + Math.random() * (height - margin * 2));
+                    }
+                }
+
+                if (dist > 6) {
+                    const desiredAngle = Math.atan2(dy, dx);
+                    let angleDiff = desiredAngle - this.angle;
+                    while (angleDiff > Math.PI) angleDiff -= Math.PI * 2;
+                    while (angleDiff < -Math.PI) angleDiff += Math.PI * 2;
+
+                    this.angle += angleDiff * 0.11;
+
+                    const turnFactor = Math.max(0.25, 1 - Math.abs(angleDiff) / Math.PI);
+                    const arriveFactor = Math.min(1, dist / 65);
+                    const targetSpeed = this.maxSpeed * turnFactor * arriveFactor;
+                    this.speed += (targetSpeed - this.speed) * 0.15;
+
+                    this.x += Math.cos(this.angle) * this.speed;
+                    this.y += Math.sin(this.angle) * this.speed;
+                } else {
+                    this.speed *= 0.8;
+                    if (this.hasUserTarget && this.speed < 0.15) {
+                        this.hasUserTarget = false;
+                        this.idleTimer = 0;
+                        if (spiderStatusEl) {
+                            spiderStatusEl.textContent = "ĐÃ ĐẾN MỤC TIÊU // CHẾ ĐỘ CẢNH GIỚI";
+                        }
+                    }
+                }
+
+                const anySteppingInGroup = [
+                    this.legs.some(l => l.group === 0 && l.stepping),
+                    this.legs.some(l => l.group === 1 && l.stepping)
+                ];
+
+                this.legs.forEach(leg => {
+                    const ideal = this.getIdealFootPos(leg);
+                    const leadX = ideal.x + Math.cos(this.angle) * (this.speed * 6.5);
+                    const leadY = ideal.y + Math.sin(this.angle) * (this.speed * 6.5);
+
+                    const errDist = Math.hypot(leadX - leg.footX, leadY - leg.footY);
+                    const stepThreshold = (24 + (leg.index % 2) * 5) * this.scale;
+
+                    const otherGroup = leg.group === 0 ? 1 : 0;
+                    if (!leg.stepping && errDist > stepThreshold && !anySteppingInGroup[otherGroup]) {
+                        leg.stepping = true;
+                        leg.stepProgress = 0;
+                        leg.stepStartX = leg.footX;
+                        leg.stepStartY = leg.footY;
+                        leg.stepTargetX = leadX;
+                        leg.stepTargetY = leadY;
+                    }
+
+                    if (leg.stepping) {
+                        const stepInc = Math.max(0.11, Math.min(0.24, 0.11 + this.speed * 0.032));
+                        leg.stepProgress += stepInc;
+
+                        if (leg.stepProgress >= 1) {
+                            leg.stepProgress = 1;
+                            leg.stepping = false;
+                            leg.footX = leg.stepTargetX;
+                            leg.footY = leg.stepTargetY;
+                            leg.liftHeight = 0;
+                        } else {
+                            const t = leg.stepProgress;
+                            const ease = t * t * (3 - 2 * t);
+                            leg.footX = leg.stepStartX + (leg.stepTargetX - leg.stepStartX) * ease;
+                            leg.footY = leg.stepStartY + (leg.stepTargetY - leg.stepStartY) * ease;
+                            leg.liftHeight = Math.sin(t * Math.PI) * 14 * this.scale;
+                        }
+                    }
+                });
+            }
+
+            draw(ctx, time) {
+                const s = this.scale;
+                const breathe = Math.sin(time * 0.005) * 1.2 * s;
+                const bodyBob = Math.abs(Math.sin(time * 0.015)) * (this.speed * 0.6);
+
+                ctx.save();
+
+                // Bóng đổ mềm dưới toàn bộ con nhện
+                ctx.save();
+                ctx.translate(this.x + 8 * s, this.y + 12 * s);
+                ctx.rotate(this.angle);
+                const shadowGrad = ctx.createRadialGradient(0, 0, 4, 0, 0, 58 * s);
+                shadowGrad.addColorStop(0, 'rgba(0, 0, 0, 0.72)');
+                shadowGrad.addColorStop(0.6, 'rgba(0, 15, 5, 0.35)');
+                shadowGrad.addColorStop(1, 'rgba(0, 0, 0, 0)');
+                ctx.fillStyle = shadowGrad;
+                ctx.beginPath();
+                ctx.ellipse(-6 * s, 0, 52 * s, 36 * s, 0, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.restore();
+
+                // Vẽ 8 chân đa khớp
+                this.legs.forEach(leg => {
+                    this.drawRealisticLeg(ctx, leg, bodyBob);
+                });
+
+                // Vẽ xúc tu miệng (Pedipalps) & Kìm độc
+                ctx.save();
+                ctx.translate(this.x, this.y - bodyBob);
+                ctx.rotate(this.angle);
+
+                const palpWiggle = Math.sin(time * 0.008) * 0.14;
+                [-1, 1].forEach(side => {
+                    ctx.save();
+                    ctx.translate(15 * s, side * 5.5 * s);
+                    ctx.rotate(side * (0.35 + palpWiggle));
+
+                    ctx.strokeStyle = '#0d2614';
+                    ctx.lineWidth = 3.2 * s;
+                    ctx.lineCap = 'round';
+                    ctx.beginPath();
+                    ctx.moveTo(0, 0);
+                    ctx.lineTo(11 * s, side * 3 * s);
+                    ctx.lineTo(18 * s, side * 1 * s);
+                    ctx.stroke();
+
+                    ctx.strokeStyle = 'rgba(0, 255, 65, 0.45)';
+                    ctx.lineWidth = 1 * s;
+                    ctx.stroke();
+                    ctx.restore();
+                });
+
+                // Bụng Nhện (Abdomen)
+                ctx.save();
+                ctx.translate(-22 * s, 0);
+
+                ctx.fillStyle = 'rgba(0, 0, 0, 0.5)';
+                ctx.beginPath();
+                ctx.ellipse(2 * s, 4 * s, (23 * s) + breathe, (17 * s) + breathe * 0.7, 0, 0, Math.PI * 2);
+                ctx.fill();
+
+                const abdGrad = ctx.createRadialGradient(-4 * s, -5 * s, 2 * s, 0, 0, 24 * s);
+                abdGrad.addColorStop(0, '#1f472b');
+                abdGrad.addColorStop(0.45, '#0b1f11');
+                abdGrad.addColorStop(0.85, '#040d07');
+                abdGrad.addColorStop(1, '#00ff41');
+
+                ctx.fillStyle = abdGrad;
+                ctx.beginPath();
+                ctx.ellipse(0, 0, (22 * s) + breathe, (16.5 * s) + breathe * 0.7, 0, 0, Math.PI * 2);
+                ctx.fill();
+
+                ctx.strokeStyle = 'rgba(0, 255, 65, 0.55)';
+                ctx.lineWidth = 1.2 * s;
+                ctx.stroke();
+
+                ctx.strokeStyle = 'rgba(0, 255, 95, 0.65)';
+                ctx.lineWidth = 1.5 * s;
+                ctx.beginPath();
+                ctx.moveTo(-10 * s, 0);
+                ctx.lineTo(-2 * s, -5 * s);
+                ctx.lineTo(6 * s, 0);
+                ctx.lineTo(-2 * s, 5 * s);
+                ctx.closePath();
+                ctx.stroke();
+
+                ctx.fillStyle = 'rgba(0, 255, 65, 0.25)';
+                ctx.fill();
+
+                // Lông tơ quanh bụng nhện
+                ctx.strokeStyle = 'rgba(130, 255, 165, 0.35)';
+                ctx.lineWidth = 0.8 * s;
+                for (let h = 0; h < 14; h++) {
+                    const ha = (h / 14) * Math.PI * 2;
+                    const hx1 = Math.cos(ha) * 21 * s;
+                    const hy1 = Math.sin(ha) * 16 * s;
+                    const hx2 = Math.cos(ha) * 25 * s;
+                    const hy2 = Math.sin(ha) * 19.5 * s;
+                    ctx.beginPath();
+                    ctx.moveTo(hx1, hy1);
+                    ctx.lineTo(hx2, hy2);
+                    ctx.stroke();
+                }
+                ctx.restore();
+
+                // Đầu Ngực (Cephalothorax)
+                const headGrad = ctx.createRadialGradient(4 * s, -3 * s, 1 * s, 2 * s, 0, 16 * s);
+                headGrad.addColorStop(0, '#285936');
+                headGrad.addColorStop(0.6, '#0c2112');
+                headGrad.addColorStop(1, '#030b05');
+
+                ctx.fillStyle = headGrad;
+                ctx.beginPath();
+                ctx.ellipse(2 * s, 0, 15 * s, 12 * s, 0, 0, Math.PI * 2);
+                ctx.fill();
+
+                ctx.strokeStyle = 'rgba(0, 255, 65, 0.65)';
+                ctx.lineWidth = 1.2 * s;
+                ctx.stroke();
+
+                ctx.strokeStyle = 'rgba(0, 255, 65, 0.3)';
+                ctx.beginPath();
+                ctx.moveTo(-6 * s, 0);
+                ctx.lineTo(8 * s, 0);
+                ctx.stroke();
+
+                // Cụm 6 mắt đỏ phát sáng sắc sảo ở phía trước đầu
+                const eyes = [
+                    { x: 14.5, y: -2.6, r: 1.8 },
+                    { x: 14.5, y:  2.6, r: 1.8 },
+                    { x: 13.0, y: -5.5, r: 1.3 },
+                    { x: 13.0, y:  5.5, r: 1.3 },
+                    { x: 10.5, y: -4.2, r: 1.1 },
+                    { x: 10.5, y:  4.2, r: 1.1 }
+                ];
+                eyes.forEach(eye => {
+                    ctx.fillStyle = '#ff2a4b';
+                    ctx.shadowColor = '#ff0033';
+                    ctx.shadowBlur = 8;
+                    ctx.beginPath();
+                    ctx.arc(eye.x * s, eye.y * s, eye.r * s, 0, Math.PI * 2);
+                    ctx.fill();
+                });
+                ctx.shadowBlur = 0;
+
+                ctx.restore();
+                ctx.restore();
+            }
+
+            drawRealisticLeg(ctx, leg, bodyBob) {
+                const s = this.scale;
+
+                const hipAngle = this.angle + leg.baseAngle * 0.65;
+                const hipX = this.x + Math.cos(hipAngle) * (9 * s);
+                const hipY = (this.y - bodyBob) + Math.sin(hipAngle) * (8 * s);
+
+                const footX = leg.footX;
+                const footY = leg.footY - leg.liftHeight;
+
+                ctx.strokeStyle = 'rgba(0, 0, 0, 0.45)';
+                ctx.lineWidth = 2.5 * s;
+                ctx.lineCap = 'round';
+                ctx.beginPath();
+                ctx.moveTo(hipX + 4 * s, hipY + 7 * s);
+                ctx.lineTo(leg.footX + 4 * s, leg.footY + 7 * s);
+                ctx.stroke();
+
+                const vx = footX - hipX;
+                const vy = footY - hipY;
+                const len = Math.hypot(vx, vy) || 1;
+                const nx = (-vy / len) * leg.side;
+                const ny = (vx / len) * leg.side;
+
+                const kneeArch = (22 * s) + leg.liftHeight * 0.7;
+                const kneeX = hipX + vx * 0.42 + nx * (10 * s);
+                const kneeY = hipY + vy * 0.42 + ny * (10 * s) - kneeArch;
+
+                const ankleX = hipX + vx * 0.76 + nx * (5 * s);
+                const ankleY = hipY + vy * 0.76 + ny * (5 * s) - kneeArch * 0.42;
+
+                ctx.strokeStyle = '#0c2413';
+                ctx.lineWidth = 4.2 * s;
+                ctx.lineCap = 'round';
+                ctx.beginPath();
+                ctx.moveTo(hipX, hipY);
+                ctx.lineTo(kneeX, kneeY);
+                ctx.stroke();
+
+                ctx.strokeStyle = 'rgba(0, 255, 65, 0.55)';
+                ctx.lineWidth = 1.2 * s;
+                ctx.stroke();
+
+                ctx.strokeStyle = '#11301a';
+                ctx.lineWidth = 3.0 * s;
+                ctx.beginPath();
+                ctx.moveTo(kneeX, kneeY);
+                ctx.lineTo(ankleX, ankleY);
+                ctx.stroke();
+
+                ctx.strokeStyle = 'rgba(0, 255, 65, 0.45)';
+                ctx.lineWidth = 1.0 * s;
+                ctx.stroke();
+
+                ctx.strokeStyle = '#184726';
+                ctx.lineWidth = 1.8 * s;
+                ctx.beginPath();
+                ctx.moveTo(ankleX, ankleY);
+                ctx.lineTo(footX, footY);
+                ctx.stroke();
+
+                ctx.fillStyle = '#00ff41';
+                ctx.beginPath();
+                ctx.arc(kneeX, kneeY, 1.6 * s, 0, Math.PI * 2);
+                ctx.arc(ankleX, ankleY, 1.2 * s, 0, Math.PI * 2);
+                ctx.fill();
+
+                if (!leg.stepping) {
+                    ctx.fillStyle = 'rgba(0, 255, 65, 0.75)';
+                    ctx.beginPath();
+                    ctx.arc(footX, footY, 1.5 * s, 0, Math.PI * 2);
+                    ctx.fill();
+                }
+            }
+        }
+
+        resizeAllCanvases();
+        const spider = new RealisticSpider(width * 0.5, height * 0.62);
+
+        // ============================================================================
+        // PHẦN 5: TƯƠNG TÁC CHẠM / CLICK MÀN HÌNH & CHẶN LAN SỰ KIỆN TỪ NÚT ZALO
+        // ============================================================================
+        function handleScreenInteract(clientX, clientY) {
+            spider.setTarget(clientX, clientY);
+
+            clickRipples.push({
+                x: clientX,
+                y: clientY,
+                radius: 4,
+                maxRadius: 48,
+                alpha: 1.0
+            });
+        }
+
+        spiderCanvas.addEventListener('pointerdown', (e) => {
+            if (e.target.closest && e.target.closest('#zaloContactBtn')) return;
+            e.preventDefault();
+            handleScreenInteract(e.clientX, e.clientY);
+        });
+
+        const zaloBtn = document.getElementById('zaloContactBtn');
+        if (zaloBtn) {
+            ['pointerdown', 'mousedown', 'touchstart', 'click'].forEach(evtName => {
+                zaloBtn.addEventListener(evtName, (e) => {
+                    e.stopPropagation();
+                });
+            });
+            zaloBtn.addEventListener('click', () => {
+                if (spiderStatusEl) {
+                    spiderStatusEl.textContent = "ĐANG MỞ ZALO LIÊN HỆ: 0378257342...";
+                }
+            });
+        }
+
+        function drawClickRipples(ctx) {
+            for (let i = clickRipples.length - 1; i >= 0; i--) {
+                const r = clickRipples[i];
+                r.radius += 1.6;
+                r.alpha -= 0.022;
+
+                if (r.alpha <= 0) {
+                    clickRipples.splice(i, 1);
+                    continue;
+                }
+
+                ctx.save();
+                ctx.translate(r.x, r.y);
+
+                ctx.strokeStyle = `rgba(0, 255, 65, ${r.alpha})`;
+                ctx.lineWidth = 1.6;
+                ctx.beginPath();
+                ctx.arc(0, 0, r.radius, 0, Math.PI * 2);
+                ctx.stroke();
+
+                ctx.strokeStyle = `rgba(168, 255, 190, ${r.alpha * 0.8})`;
+                ctx.lineWidth = 1;
+                ctx.beginPath();
+                ctx.arc(0, 0, r.radius * 0.45, 0, Math.PI * 2);
+                ctx.stroke();
+
+                const ch = 10;
+                ctx.beginPath();
+                ctx.moveTo(-ch, 0); ctx.lineTo(ch, 0);
+                ctx.moveTo(0, -ch); ctx.lineTo(0, ch);
+                ctx.stroke();
+
+                ctx.restore();
+            }
+
+            if (spider.hasUserTarget) {
+                ctx.save();
+                ctx.translate(spider.targetX, spider.targetY);
+                ctx.strokeStyle = 'rgba(0, 255, 65, 0.65)';
+                ctx.setLineDash([3, 3]);
+                ctx.beginPath();
+                ctx.arc(0, 0, 14, 0, Math.PI * 2);
+                ctx.stroke();
+                ctx.setLineDash([]);
+                ctx.restore();
+
+                ctx.save();
+                ctx.strokeStyle = 'rgba(0, 255, 65, 0.22)';
+                ctx.lineWidth = 1;
+                ctx.setLineDash([4, 6]);
+                ctx.beginPath();
+                ctx.moveTo(spider.x, spider.y);
+                ctx.lineTo(spider.targetX, spider.targetY);
+                ctx.stroke();
+                ctx.restore();
+            }
+        }
+
+        // ============================================================================
+        // VÒNG LẶP CHÍNH
+        // ============================================================================
+        let frameCount = 0;
+        function mainLoop(timestamp) {
+            frameCount++;
+
+            if (frameCount % 2 === 0) {
+                drawMatrixRain();
+            }
+
+            drawSatelliteSystem(timestamp || 0);
+
+            spiderCtx.clearRect(0, 0, width, height);
+            drawClickRipples(spiderCtx);
+            spider.update(timestamp || 0);
+            spider.draw(spiderCtx, timestamp || 0);
+
+            requestAnimationFrame(mainLoop);
+        }
+
+        window.onload = function () {
+            for (let i = 0; i < 18; i++) {
+                appendContinuousCode();
+            }
+            requestAnimationFrame(mainLoop);
+        };
+    </script>
+</body>
+</html>
